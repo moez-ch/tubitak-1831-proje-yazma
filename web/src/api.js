@@ -1,5 +1,7 @@
+const BASE = '/proje-yazma';
+
 async function req(url, options = {}) {
-  const res = await fetch(url, {
+  const res = await fetch(`${BASE}${url}`, {
     headers: { 'Content-Type': 'application/json' },
     ...options
   });
@@ -28,7 +30,7 @@ export const api = {
   uploadFiles: (id, fileList) => {
     const fd = new FormData();
     for (const f of fileList) fd.append('files', f);
-    return fetch(`/api/projects/${id}/files`, { method: 'POST', body: fd }).then((r) => {
+    return fetch(`${BASE}/api/projects/${id}/files`, { method: 'POST', body: fd }).then((r) => {
       if (!r.ok) throw new Error('Dosya yüklenemedi');
       return r.json();
     });

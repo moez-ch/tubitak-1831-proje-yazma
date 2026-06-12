@@ -10,7 +10,7 @@ import './styles.css';
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <LanguageProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/proje-yazma">
         <Routes>
           <Route element={<App />}>
             <Route index element={<ProjectsList />} />

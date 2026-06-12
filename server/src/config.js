@@ -16,6 +16,9 @@ export const DB_PATH = path.join(DATA_DIR, 'app.db');
 
 export const PORT = parseInt(process.env.PORT || '4000', 10);
 
+// URL altyolu (reverse proxy ile aynı path altında yayınlamak için, ör. '/proje-yazma')
+export const BASE = process.env.BASE_PATH || '';
+
 export const CLAUDE = {
   apiKey: process.env.CLAUDE_API_KEY || '',
   model: process.env.CLAUDE_MODEL || 'claude-opus-4-8',

@@ -3,10 +3,11 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  base: '/proje-yazma/',
   server: {
     port: 5173,
     proxy: {
-      '/api': 'http://localhost:4000'
+      '/proje-yazma/api': 'http://localhost:4000'
     }
   }
 });

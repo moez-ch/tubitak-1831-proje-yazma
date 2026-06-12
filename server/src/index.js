@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import fs from 'node:fs';
-import { PORT, GOOGLE, VAULT_PATH, CHATGPT } from './config.js';
+import path from 'node:path';
+import { PORT, BASE, ROOT_DIR, GOOGLE, VAULT_PATH, CHATGPT } from './config.js';
 import './db.js'; // şemayı başlat
 import projectsRouter from './routes/projects.js';
 import generateRouter from './routes/generate.js';
@@ -15,7 +16,7 @@ app.use(cors());
 app.use(express.json({ limit: '2mb' }));
 
 // Sağlık / yapılandırma durumu
-app.get('/api/health', (req, res) => {
+app.get(`${BASE}/api/health`, (req, res) => {
   res.json({
     ok: true,
     engine: 'chatgpt-web',
@@ -26,15 +27,22 @@ app.get('/api/health', (req, res) => {
 });
 
 // Proje türleri (şablonlar)
-app.get('/api/templates', (req, res) => {
+app.get(`${BASE}/api/templates`, (req, res) => {
   res.json(TEMPLATES.map(({ id, labelTr, labelEn, descTr, descEn, months, workPackages }) =>
     ({ id, labelTr, labelEn, descTr, descEn, months, workPackages })));
 });
 
-app.use('/api/projects', projectsRouter);
-app.use('/api/projects', generateRouter);
-app.use('/api/knowledge', knowledgeRouter);
-app.use('/api/chatgpt', chatgptRouter);
+app.use(`${BASE}/api/projects`, projectsRouter);
+app.use(`${BASE}/api/projects`, generateRouter);
+app.use(`${BASE}/api/knowledge`, knowledgeRouter);
+app.use(`${BASE}/api/chatgpt`, chatgptRouter);
+
+// Üretimde derlenmiş web arayüzünü sun
+const distPath = path.join(ROOT_DIR, 'web', 'dist');
+if (fs.existsSync(distPath)) {
+  app.use(BASE, express.static(distPath));
+  app.get(`${BASE}/*`, (_req, res) => res.sendFile(path.join(distPath, 'index.html')));
+}
 
 app.use((err, req, res, next) => {
   console.error('Sunucu hatası:', err);
