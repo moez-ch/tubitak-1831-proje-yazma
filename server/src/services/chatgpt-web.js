@@ -18,7 +18,9 @@ const SEL = {
   composer: '#prompt-textarea',
   sendButton: '[data-testid="send-button"]',
   stopButton: '[data-testid="stop-button"]',
-  assistantMsg: '[data-message-author-role="assistant"]'
+  assistantMsg: '[data-message-author-role="assistant"]',
+  // Oturum süresi dolup anonim moda düşüldüğünde görünen "giriş yap" modalı
+  noAuthModal: '#modal-no-auth-soft-rate-limit-inline-auth, [data-testid="modal-no-auth-soft-rate-limit-inline-auth"]'
 };
 
 let contextPromise = null;     // tek bir kalıcı bağlam
@@ -54,10 +56,14 @@ export async function closeBrowser() {
 async function isLoggedIn(page, timeout = 8000) {
   try {
     await page.locator(SEL.composer).waitFor({ state: 'visible', timeout });
-    return true;
   } catch {
     return false;
   }
+  // Compositör anonim kullanıcılarda da görünür. "no-auth" rate-limit modalı
+  // varsa oturum aslında kapalı/süresi dolmuş demektir.
+  const noAuthModal = page.locator(SEL.noAuthModal).first();
+  if (await noAuthModal.isVisible().catch(() => false)) return false;
+  return true;
 }
 
 /**
@@ -103,6 +109,10 @@ export async function checkSession() {
 
 /** Compositöre metin yazar ve gönderir. */
 async function sendMessage(page, text) {
+  const noAuthModal = page.locator(SEL.noAuthModal).first();
+  if (await noAuthModal.isVisible().catch(() => false)) {
+    throw new Error('ChatGPT oturumunun süresi doldu ve anonim moda düşüldü. Lütfen üst menüden "ChatGPT Giriş" ile yeniden giriş yapın.');
+  }
   const composer = page.locator(SEL.composer);
   await composer.click();
   await composer.fill(text);

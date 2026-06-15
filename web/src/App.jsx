@@ -6,6 +6,7 @@ import { useI18n } from './i18n.jsx';
 export default function App() {
   const { t, lang, setLang } = useI18n();
   const [health, setHealth] = useState(null);
+  const [chatgptLoggedIn, setChatgptLoggedIn] = useState(null);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [setupDismissed, setSetupDismissed] = useState(() => localStorage.getItem('setupDismissed') === '1');
   const [loggingIn, setLoggingIn] = useState(false);
@@ -13,7 +14,11 @@ export default function App() {
   function refreshHealth() {
     api.health().then(setHealth).catch(() => setHealth({ ok: false }));
   }
+  function refreshChatgptSession() {
+    api.chatgptSession().then((s) => setChatgptLoggedIn(!!s.loggedIn)).catch(() => setChatgptLoggedIn(false));
+  }
   useEffect(refreshHealth, []);
+  useEffect(refreshChatgptSession, []);
 
   useEffect(() => { document.documentElement.lang = lang; }, [lang]);
   useEffect(() => {
@@ -33,12 +38,14 @@ export default function App() {
     } catch { /* ignore */ } finally {
       setLoggingIn(false);
       refreshHealth();
+      refreshChatgptSession();
     }
   }
 
-  const needsSetup = health && (!health.chatgptProfile || !health.googleConfigured);
+  const chatgptReady = health && health.chatgptProfile && chatgptLoggedIn !== false;
+  const needsSetup = health && (!chatgptReady || !health.googleConfigured);
   const missing = health
-    ? [!health.chatgptProfile && 'ChatGPT', !health.googleConfigured && 'Google'].filter(Boolean).join(lang === 'tr' ? ' ve ' : ' & ')
+    ? [!chatgptReady && 'ChatGPT', !health.googleConfigured && 'Google'].filter(Boolean).join(lang === 'tr' ? ' ve ' : ' & ')
     : '';
 
   return (
@@ -55,11 +62,11 @@ export default function App() {
         <div className="topbar-right">
           {health && (
             <div className="status-pills">
-              <Pill ok={health.chatgptProfile} label="ChatGPT" t={t} />
+              <Pill ok={chatgptReady} label="ChatGPT" t={t} />
               <Pill ok={health.googleConfigured} label="Google" t={t} />
             </div>
           )}
-          {health && !health.chatgptProfile && (
+          {health && !chatgptReady && (
             <button className="btn btn-sm" onClick={chatgptLogin} disabled={loggingIn}>
               {loggingIn ? t('chatgpt.loggingIn') : t('chatgpt.login')}
             </button>
@@ -84,7 +91,7 @@ export default function App() {
           <span>
             <strong>{t('setup.title')}.</strong> {t('setup.body', { what: missing })}
           </span>
-          {!health.chatgptProfile && (
+          {!chatgptReady && (
             <button onClick={chatgptLogin} disabled={loggingIn}>
               {loggingIn ? t('chatgpt.loggingIn') : t('chatgpt.login')}
             </button>
