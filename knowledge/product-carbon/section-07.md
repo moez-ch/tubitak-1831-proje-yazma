@@ -11,3 +11,4 @@ maxTokens: 4500
   1. **Faaliyetler:** birkaç anlaşılır cümle.
   2. **Çıktılar:** iş paketi başına 1 belgelenmiş çıktının adı (ör. Mevcut Durum ve Proje Planlama Raporu, Ürün/Yaşam Döngüsü Veri Toplama Tablosu, Emisyon Faktörleri Tablosu, Ürün Karbon Ayak İzi Raporu, Ürüne Özgü Yeşil Dönüşüm Yol Haritası).
 - Konuyla ilgisiz iş ekleme; ürün/makine detayına girme.
+- **Faaliyetler** her iş paketinin SADECE o ay içinde tamamlanacak, somut ve kesin işleri olmalı. Geniş zaman/edilgen-kesin yapı kullan ("tespit edilir", "hesaplanır", "raporlanır"); "yapılacaktır", "gerçekleştirilecektir", "tespit edilecektir" gibi gelecek zamanlı, süre belirsiz ifadelerden kaçın. Çalışmayı kimin yürüteceği (şirket ekibi/mentör birlikte) iş paketi açıklamasından anlaşılmalı.

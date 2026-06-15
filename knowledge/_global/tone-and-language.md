@@ -10,5 +10,6 @@ description: Tüm bölümlerde geçerli yazım dili ve üslup kuralları
 - Yalnızca analiz formunda verilen bilgileri kullan. Formda olmayan sayısal veri, belge, kapasite, yatırım, makine, müşteri, sertifika veya ihracat bilgisi **uydurma**.
 - Her soru yalnızca o sorunun istediğini yanıtlasın; bölümler birbirini tekrar etmesin.
 - Yalnızca istenen metni döndür — bölüm başlığı veya soru numarası ekleme.
+- İş planı / iş paketi faaliyetlerini "yapılacaktır", "gerçekleştirilecektir", "tespit edilecektir" gibi gelecek zamanlı ve süresi belirsiz ifadelerle yazma. Bunun yerine geniş zaman/edilgen-kesin yapı kullan ("tespit edilir", "hesaplanır", "raporlanır") ve faaliyetin o iş paketinin süresi içinde tamamlanan, kesin bir iş olduğu açıkça anlaşılsın.
 
 İlgili: [[evaluation-criteria]], [[formatting]]
