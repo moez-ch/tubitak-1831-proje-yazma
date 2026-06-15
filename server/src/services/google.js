@@ -40,7 +40,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /** Geçici ağ/DNS hatalarında yeniden dener. */
 async function withRetry(fn, label = 'Google') {
-  const delays = [1500, 3000, 6000, 10000];
+  const delays = [1500, 3000, 6000, 10000, 20000, 30000];
   let lastErr;
   for (let attempt = 0; attempt <= delays.length; attempt++) {
     try {
