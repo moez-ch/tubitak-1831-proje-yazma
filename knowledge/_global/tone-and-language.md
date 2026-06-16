@@ -12,4 +12,8 @@ description: Tüm bölümlerde geçerli yazım dili ve üslup kuralları
 - Yalnızca istenen metni döndür — bölüm başlığı veya soru numarası ekleme.
 - İş planı / iş paketi faaliyetlerini "yapılacaktır", "gerçekleştirilecektir", "tespit edilecektir" gibi gelecek zamanlı ve süresi belirsiz ifadelerle yazma. Bunun yerine geniş zaman/edilgen-kesin yapı kullan ("tespit edilir", "hesaplanır", "raporlanır") ve faaliyetin o iş paketinin süresi içinde tamamlanan, kesin bir iş olduğu açıkça anlaşılsın.
 
+**Fiil kipi (zaman/çatı) kuralı — tüm bölümlerde geçerli:** Konuya göre kimi yerde mevcut durumdan, kimi yerde gelecek plandan söz edilir; fiil çekimi buna göre seçilmelidir. Her zaman 3. tekil şahıs ve edilgen (resmi) çatı kullan; "yapar / ediyor" gibi 1. şahıs veya etken günlük dilden kaçın.
+- **Mevcut durum** anlatılırken (örn. firmanın bugünkü faaliyetleri, mevcut süreçler): geniş/şimdiki zaman edilgen kullan — "yapılmaktadır", "yürütülmektedir", "kullanılmaktadır", "gerçekleştirilmektedir".
+- **Gelecek plan, hedef, beklenen sonuç veya etki** anlatılırken (örn. proje hedefleri, proje sonuçları, beklenen etkiler): gelecek/öngörü kipi kullan — "yapılacaktır", "gerçekleştirilecektir", "beklenmektedir", "öngörülmektedir", "hedeflenmektedir".
+
 İlgili: [[evaluation-criteria]], [[formatting]]
